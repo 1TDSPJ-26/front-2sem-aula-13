@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import type { TipoProduto } from "../../types/types";
-import { listaProdutos } from "../../data/listaProdutos";
-import { Link } from "react-router";
+
+import { Link, useNavigate } from "react-router";
 import { CiEdit as Editar} from "react-icons/ci";
 
 
 
 export default function Produtos() {
+  document.title = "Produtos"
+  //  Redirecionador em, crioacao
+  const navigate = useNavigate();
+
+  //Estrutura que vai receber a lista, seja ela mocada ou externa!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
+
 
   const [produtos, setProdutos] = useState<TipoProduto[]>([]);
 

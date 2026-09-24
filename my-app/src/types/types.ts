@@ -1,6 +1,7 @@
 //Criando um tipo de dados para o componente
 export type TipoProduto = {
-    id: number;
+    id: string;
     nome: string;
-    preco: number
+    preco: number;
+    estoque: number;
 }
