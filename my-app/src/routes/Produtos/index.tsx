@@ -2,29 +2,72 @@
 import { useState, useEffect } from 'react';
 
 // 2. O molde que criamos
-import { type TipoProduto } from '../../types/types';
+import { type Produto } from '../../types/produto';
 
-// 3. Os dados fictícios
-import { listaProdutos } from '../../data/listaProdutos';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { CiEdit as Editar } from "react-icons/ci";
+import { MdDelete as Excluir} from "react-icons/md";
 
 export default function Produtos() {
+  // Muda o título da página
+  document.title = "Produtos";
+  // Criando o redirecionador
+  const navigate = useNavigate();
   // Criamos o estado "produtos". 
   // - Ele começa vazio: []
   // - Avisamos ao TypeScript que ele vai guardar uma lista de TipoProduto: <TipoProduto[]>
-  const [produtos, setProdutos] = useState<TipoProduto[]>([]);
+  const [produtos, setProdutos] = useState<Produto[]>([]);
 
-    // O useEffect vai entrar aqui no Passo 5...
-    // Esse efeito roda automaticamente quando a tela é montada
   useEffect(() => {
-    // Pegamos a listaProdutos do arquivo e guardamos dentro do useState
-    setProdutos(listaProdutos);
-    // O array vazio [] no final é o "segredo":
-    // Ele diz ao React: "Execute isso APENAS UMA VEZ, quando o componente nascer na tela".
-    // Se não colocar esse [], o React entraria em um loop infinito!
+  const carregaProdutos = async () => {
+    try{
+      const response = await fetch("http://localhost:3001/produtos")
+      if (!response.ok){
+        throw new Error (`Falha na requisição dos produtos... ${response.status} - ${response.statusText}`)
+      }
+      const data:Produto[] = await response.json();
+      console.log(data)
+      setProdutos(data)
+    } catch (error) {
+      console.error(error)
+    } 
+  }
+  carregaProdutos();
   }, []);
 
+  const handleDelete = async(id:string) => {
+    try {
+      const response = await fetch(`http://localhost:3001/produtos/${id}`, {
+        method: "DELETE",
+      /*
+      No caso do Post
+
+      const response = await fetch(`http://localhost:3001/produtos/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringfy({"nome": "criando", "preco": 0, "descricao": "x", "avatar": "url"})
+
+      No caso do Put
+
+      const response = await fetch(`http://localhost:3001/produtos/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringfy({"id": id, "nome": "atualiando", "preco": 0, "descricao": "x", "avatar": "url"})
+      */
+      });
+      if (!response.ok){
+        throw new Error (`Falha na deleção do produto... ${response.status} - ${response.statusText}`)
+      }
+      alert("Produto excluído com sucesso")
+      navigate('/')
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <main style={{ padding: '20px', fontFamily: 'sans-serif' }}>
@@ -67,7 +110,8 @@ export default function Produtos() {
               <td>R$ {item.preco.toFixed(2)}</td>
               <td>{item.descricao}</td>
               <td>
-                <Link to={`/editar-produto/${item.id}`}><Editar className='w-10 h-10'/></Link>
+                <Link to={`/editar-produto/${item.id}`}><Editar className='w-10 h-10'/></Link>|
+                <Excluir style={{cursor:'pointer'}} onClick={()=> handleDelete(item.id)} className='w-10 h-10'/>
               </td>
             </tr>
           ))}
