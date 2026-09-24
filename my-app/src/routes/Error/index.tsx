@@ -1,5 +1,8 @@
+
 export default function Error() {
   return (
-    <div>Error</div>
+    <header>
+        <h2>Error</h2>
+    </header>
   )
 }
