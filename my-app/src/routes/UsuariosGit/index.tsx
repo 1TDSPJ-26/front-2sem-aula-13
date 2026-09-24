@@ -28,7 +28,7 @@ export default function UsuariosGit() {
     const[usuarios,setUsuarios] = useState<TipoUsuarioGit[]>([]);
 
     useEffect( ()=>{
-        //Área de execução
+        
         async function loadingData() {
             try {
                 const response = await fetch("https://api.github.com/users");
@@ -55,9 +55,7 @@ export default function UsuariosGit() {
                 <ul>
                     {usuarios.map( (u)=>(
                     <li key={u.id}>{u.id} - {u.login} - 
-                        <a href={u.html_url}>
-                            <img src={u.avatar_url} alt={u.login} width={40}/>
-                        </a>
+                            <a href={u.html_url} target="_blank"><img src={u.avatar_url} alt={u.login} width={40} /></a> 
                     </li>))}
                 </ul>
         </main>
