@@ -1,80 +1,48 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
-//import type { TipoProduto } from "../../types/types";
+import type { TipoProduto } from "../../types/types";
 
-//Criando uma interface para o tipo de dados que o componente vai receber
-
-//interface Produto {
-
-//    id: number;
-
-//    nome: string;
-
-//    preco: number
-
-//}
-
-//Criando um tipo de dados para o componente
-
-// type TipoProduto = {
-
-//     id: number;
-
-//     nome: string;
-
-//     preco: number
-
-// }
-
-
-
-//Criando um array de produtos
-
-//const listaProdutos: TipoProduto[] = 
-[
-
-    { id: 1, nome: "Produto 1", preco: 10.0 },
-
-    { id: 2, nome: "Produto 2", preco: 20.0 },
-
-    { id: 3, nome: "Produto 3", preco: 30.0 },
-
-];
+import { listaProdutos } from "../../data/listaProdutos";
 
 export default function EditarProdutos() {
 
-    const { id } = useParams<string>();
+  const { id } = useParams<string>();
 
-    //const[produto, setProduto] = useState<{ id: number; nome: string; preco: number }>();
+  const [produto, setProduto] = useState<TipoProduto>({} as TipoProduto);
 
-    //const [produto, setProduto] = useState<TipoProduto>({} as TipoProduto);
+  useEffect(() => {
 
-    const [clicando, setClicando] = useState<number>(0);
+const prodEncontrado = listaProdutos.find((p) => p.id === id);
 
-    useEffect(() => {
+    setProduto(prodEncontrado!);
 
-        console.log("Teste DENTRO DO EFFECT");
+  }, []);
 
-    }, []);
-    console.log("Teste FORA DO EFFECT");
+  return (
 
-    return (
+    <main>
 
-        <main>
+      <h2>Editar Produtos</h2>
 
-            <h2>Editar Produtos</h2>
+      {produto ? (
 
-            <p>Id: {id}</p>
-            <div>
-                <p>Valor do state: {clicando}</p>
-                <button onClick={() => setClicando(clicando + 1)}>Clique aqui</button>
-            </div>
+        <div>
 
+          <p>Nome do produto: {produto.nome}</p>
 
-        </main>
+          <p>Preço do produto: {produto.preco}</p>
 
-    )
+        </div>
 
+      ) : (
+
+        <p>Produto não encontrado</p>
+
+      )}
+
+    </main>
+
+  );
 }
