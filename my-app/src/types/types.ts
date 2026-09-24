@@ -2,5 +2,7 @@
 export type TipoProduto = {
     id: number;
     nome: string;
-    preco: number
+    preco: number;
+    estoque: number;
+    avatar: string;
 }
