@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "api": "json-server db.json --port 3001", 
+    "api": "json-server db.json --port 3001",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",

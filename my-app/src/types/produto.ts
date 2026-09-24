@@ -1,0 +1,11 @@
+export type Produto = {
+  id: string;
+  nome: string;
+  preco: number;
+  descricao: string;
+  avatar: string;
+  estoque: number;
+};
+
+// O cadastro não escolhe o identificador: a API o gera.
+export type DadosProduto = Omit<Produto, "id">;
