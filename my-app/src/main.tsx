@@ -12,15 +12,15 @@ const router = createBrowserRouter([
   {
     path: '/', element: <App />, errorElement: <Error />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/produtos', element: <Produtos /> },
-      { path: '/editar-produtos/:id', element: <EditarProdutos /> },
-      { path: '/users/git', element: <UsuariosGit /> }
+      { path: '/', element: <Home/> },
+      { path: '/produtos', element: <Produtos/> },
+      { path: '/editar-produtos/:id', element: <EditarProdutos/> },
+      { path: '/users/git', element: <UsuariosGit/> }
     ]
   }
 ])
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>,
